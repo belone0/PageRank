@@ -1,9 +1,11 @@
 import numpy as np
 
 def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6):
+#fator 0.85, limite 100 iteracoes
     num_companies = len(relations)
     adjacency_matrix = np.zeros((num_companies, num_companies))
 
+    #preenchendo matriz estocastica
     for i in range(num_companies):
         total_relations = len(relations[i])
         if total_relations == 0:
@@ -18,8 +20,14 @@ def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6)
     column_sums[column_sums == 0] = 1  # Avoid division by zero
     adjacency_matrix /= column_sums[np.newaxis, :]
 
-    teleportation = np.full((num_companies, num_companies), 1 / num_companies)
-    matrix = damping_factor * adjacency_matrix + (1 - damping_factor) * teleportation
+    #primeira multiplicacao, matriz x matriz porcentagens
+    teleportation = np.full((num_companies, num_companies), 1 / num_companies
+
+    
+    #fazendo conta G = a*A + (1-a)*P
+    #A = matriz est, P = matriz porcentagens
+    #a = fator de multiplicacao    
+matrix = damping_factor * adjacency_matrix + (1 - damping_factor) * teleportation
     ranks = np.ones(num_companies) / num_companies
 
     for _ in range(max_iterations):
