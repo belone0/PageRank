@@ -28,6 +28,8 @@ def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6)
     #A = matriz est, P = matriz porcentagens
     #a = fator de multiplicacao    
 matrix = damping_factor * adjacency_matrix + (1 - damping_factor) * teleportation
+
+    #obtencao dos ranks pela divisao
     ranks = np.ones(num_companies) / num_companies
 
     for _ in range(max_iterations):
