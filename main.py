@@ -23,7 +23,7 @@ def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6)
     adjacency_matrix /= column_sums[np.newaxis, :]
 
     #criacao da matriz de probabilidade
-    teleportation = np.full((num_companies, num_companies), 1 / num_companies
+    teleportation = np.full((num_companies, num_companies), 1 / num_companies)
 
     
     #fazendo conta G = a*A + (1-a)*P
