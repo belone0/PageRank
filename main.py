@@ -1,11 +1,13 @@
 import numpy as np
 
 def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6):
-#fator 0.85, limite 100 iteracoes
+    #fator 0.85, limite 100 iteracoes
+
+    #determina o numero de empresas com base no tamnhano do array de relacoes e cria matriz
     num_companies = len(relations)
     adjacency_matrix = np.zeros((num_companies, num_companies))
 
-    #preenchendo matriz estocastica
+    #preenchendo matriz estocastica com as relacoes
     for i in range(num_companies):
         total_relations = len(relations[i])
         if total_relations == 0:
@@ -20,7 +22,7 @@ def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6)
     column_sums[column_sums == 0] = 1  #evita divisao por 0
     adjacency_matrix /= column_sums[np.newaxis, :]
 
-    #primeira multiplicacao, matriz x matriz porcentagens
+    #criacao da matriz de probabilidade
     teleportation = np.full((num_companies, num_companies), 1 / num_companies
 
     
@@ -29,15 +31,17 @@ def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6)
     #a = fator de multiplicacao    
     matrix = damping_factor * adjacency_matrix + (1 - damping_factor) * teleportation
 
-    #obtencao dos ranks pela divisao
+    #inicialização dos ranks
     ranks = np.ones(num_companies) / num_companies
 
+    #matriz multiplicada diversas vezes até atingit equilibrio (mudança menor que a tolerancia)
     for _ in range(max_iterations):
         new_ranks = np.dot(matrix, ranks)
         if np.linalg.norm(new_ranks - ranks) < tolerance:
             break
         ranks = new_ranks
 
+    #retorna a matriz adjacente e os ranks finais
     return adjacency_matrix, ranks
 
 # prompts
