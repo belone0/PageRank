@@ -15,9 +15,9 @@ def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6)
                 if i != j:
                     adjacency_matrix[j, i] = relations[i].count(j) / total_relations
 
-    # Normalize the columns to sum to 1, handling zero column sums
+    # normalizando a soma das colunas para 1
     column_sums = adjacency_matrix.sum(axis=0)
-    column_sums[column_sums == 0] = 1  # Avoid division by zero
+    column_sums[column_sums == 0] = 1  #evita divisao por 0
     adjacency_matrix /= column_sums[np.newaxis, :]
 
     #primeira multiplicacao, matriz x matriz porcentagens
@@ -40,7 +40,7 @@ def pagerank(relations, damping_factor=0.85, max_iterations=100, tolerance=1e-6)
 
     return adjacency_matrix, ranks
 
-# Prompt for number of companies and their relations
+# prompts
 num_companies = int(input("Enter the number of companies: "))
 relations = []
 for i in range(num_companies):
@@ -51,16 +51,16 @@ for i in range(num_companies):
         company_relations.append(relation)
     relations.append(company_relations)
 
-# Calculate PageRank
+#chamada da funcao
 adjacency_matrix, ranks = pagerank(relations)
 
-# Print the adjacency matrix
+#show
 print("Adjacency Matrix:")
 print(adjacency_matrix)
 print()
 
-# Print the PageRank scores
-print("PageRank Scores:")
+#scores
+print("Company Scores:")
 ranked_companies = np.argsort(ranks)[::-1]
 for rank, company in enumerate(ranked_companies, start=1):
     print(f"Rank {rank}: Company {company} (PageRank: {ranks[company]})")
